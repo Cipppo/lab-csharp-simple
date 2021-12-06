@@ -38,8 +38,29 @@ namespace ComplexAlgebra
         public Complex Minus(Complex cmplx) => new Complex(this.Real - cmplx.Real, this.Imaginary - cmplx.Imaginary);
 
         public Complex Complement() => new Complex(this.Real, -this.Imaginary);
-        
-        
 
+
+        protected bool Equals(Complex other)
+        {
+            return Real == other.Real && Imaginary.Equals(other.Imaginary);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Complex) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Real, Imaginary);
+        }
+
+        public override string ToString()
+        {
+            return this.Real + " " + this.Imaginary + "i";
+        }
     }
 }
