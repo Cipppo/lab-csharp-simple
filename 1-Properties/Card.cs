@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Properties
 {
     using System;
@@ -33,22 +35,13 @@ namespace Properties
         }
 
         // TODO improve
-        public string GetSeed()
-        {
-            return this.seed;
-        }
+        public string GetSeed() => this.seed;
 
         // TODO improve
-        public string GetName()
-        {
-            return this.name;
-        }
+        public string GetName() => this.name;
 
         // TODO improve
-        public int GetOrdinal()
-        {
-            return this.ordinal;
-        }
+        public int GetOrdinal() => this.ordinal;
 
         /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
@@ -58,6 +51,22 @@ namespace Properties
         }
 
         // TODO generate Equals(object obj)
+        private sealed class SeedNameOrdinalEqualityComparer : IEqualityComparer<Card>
+        {
+            public bool Equals(Card x, Card y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (ReferenceEquals(x, null)) return false;
+                if (ReferenceEquals(y, null)) return false;
+                if (x.GetType() != y.GetType()) return false;
+                return x.seed == y.seed && x.name == y.name && x.ordinal == y.ordinal;
+            }
+
+            public int GetHashCode(Card obj)
+            {
+                return HashCode.Combine(obj.seed, obj.name, obj.ordinal);
+            }
+        }
 
         // TODO generate GetHashCode()
     }
