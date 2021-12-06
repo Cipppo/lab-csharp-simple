@@ -1,3 +1,6 @@
+using System;
+using System.Dynamic;
+
 namespace ComplexAlgebra
 {
     /// <summary>
@@ -17,6 +20,26 @@ namespace ComplexAlgebra
     /// TODO:     - e.g. via the Equals(object) method
     public class Complex
     {
-        // TODO: fill this class\
+        private int Real { get; }
+        private double Imaginary { get; }
+
+        public double Modulus => Math.Sqrt( Real * Real + Imaginary * Imaginary);
+
+        public double Phase => Math.Atan2(this.Real, this.Imaginary);
+
+        public Complex(int real, double imaginary)
+        {
+            this.Real = real;
+            this.Imaginary = imaginary;
+        }
+
+        public Complex Plus(Complex cmplx) => new Complex(this.Real + cmplx.Real, this.Imaginary + cmplx.Imaginary);
+
+        public Complex Minus(Complex cmplx) => new Complex(this.Real - cmplx.Real, this.Imaginary - cmplx.Imaginary);
+
+        public Complex Complement() => new Complex(this.Real, -this.Imaginary);
+        
+        
+
     }
 }
