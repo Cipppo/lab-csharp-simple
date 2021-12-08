@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ComplexAlgebra;
 
 namespace Arrays
@@ -66,7 +67,23 @@ namespace Arrays
         /// <seealso cref="Examples.BubbleSort"/>
         public static Complex[] SortByPhase(Complex[] array)
         {
-            return null; // TODO: remove this line
+            var clone = Clone(array);
+            
+            for (int i = 0; i < clone.Length; i++)
+            {
+                for (int j = i - 1; j >= 0; j--)
+                {
+                    if (clone[j + 1].Phase < clone[j].Phase)
+                    {
+                        Complex temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    }
+                }
+            }
+
+            return clone;
+
         }
         
         /// <summary>
@@ -82,16 +99,13 @@ namespace Arrays
         public static string ArrayToString(Complex[] array)
         {
             var res = "[";
-
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length - 1; i++)
             {
                 res += array[i].ToString();
-                res += ";";
+                res += "; ";
             }
-
-            res += array[array.Length - 1].ToString();
+            res += array[array.Length - 1];
             res += "]";
-
             return res;
         }
         
