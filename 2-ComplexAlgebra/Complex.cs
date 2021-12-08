@@ -20,12 +20,12 @@ namespace ComplexAlgebra
     /// TODO:     - e.g. via the Equals(object) method
     public class Complex
     {
-        private int Real { get; }
-        private double Imaginary { get; }
+        public int Real { get; }
+        public double Imaginary { get; }
 
         public double Modulus => Math.Sqrt( Real * Real + Imaginary * Imaginary);
 
-        public double Phase => Math.Atan2(this.Real, this.Imaginary);
+        public double Phase => Math.Atan2(this.Imaginary, this.Real);
 
         public Complex(int real, double imaginary)
         {
@@ -60,7 +60,19 @@ namespace ComplexAlgebra
 
         public override string ToString()
         {
-            return this.Real + " " + this.Imaginary + "i";
+            if (Imaginary == 0.0) return Real.ToString();
+            var imAbs = Math.Abs(Imaginary);
+            var imValue = imAbs == 1.0 ? "" : imAbs.ToString();
+            string sign;
+            if (Real == 0d)
+            {
+                sign = Imaginary > 0 ? "" : "-";
+                return sign + "i" + imValue;
+            }
+
+            sign = Imaginary > 0 ? "+" : "-";
+            return $"{Real} {sign} i{imValue}";
+            
         }
     }
 }
