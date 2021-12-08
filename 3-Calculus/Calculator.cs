@@ -27,6 +27,61 @@ namespace Calculus
         public const char OperationPlus = '+';
         public const char OperationMinus = '-';
 
+        private char _actualOp;
+        private Complex _partial;
+        
+        public Complex Value { get; set; }
+        
         // TODO fill this class
+
+
+
+
+        public char Operation
+        {
+            get => _actualOp;
+            set
+            {
+                if (_actualOp != ' ')
+                {
+                    ComputeResult();
+                }
+
+                _actualOp = value;
+                _partial = Value;
+                Value = null;
+            }
+            
+        }
+
+        public void ComputeResult()
+        {
+            if (_actualOp == OperationPlus)
+            {
+                Value = _partial.Plus(Value);
+            }
+
+            if (_actualOp == OperationMinus)
+            {
+                Value = _partial.Minus(Value);
+            }
+
+            _actualOp = ' ';
+            _partial = null;
+        }
+        
+        
+        
+        public void Reset()
+        {
+            _partial = null;
+            _actualOp = ' ';
+            Value = null;
+        }
+
+        public override string ToString()
+        {
+            return _partial.ToString() + _actualOp;
+        }
     }
 }
